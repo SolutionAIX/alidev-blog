@@ -10,25 +10,13 @@ authorImage: "https://pbs.twimg.com/profile_images/1225476100547063809/53jSWs7z_
 authorBio: "Software Engineer and Founder of YouTube Transcript Optimizer"
 ---
 
-# Introducing Our New Next.js Blogging System with Tailwind CSS
+# Introducing
 
-## A Sleek and Efficient Way to Share Your Thoughts
-
-![Blog System Banner](https://raw.githubusercontent.com/Dicklesworthstone/yto_blog_posts/refs/heads/main/blog_01_banner.webp)
+## A S
 
 Hello, expand.
 
 ### Key Features
-
-1. **GitHub-Powered Content**: All our blog posts are stored as Markdown files in a public GitHub repository. This means version control and collaboration are built right in!
-
-2. **Automatic Updates**: The system periodically checks for new Markdown files in the repo, ensuring that new posts are automatically added to the blog without manual intervention.
-
-3. **Responsive Design**: Thanks to Tailwind CSS, our blog looks great on devices of all sizes. From mobile phones to wide-screen desktops, the reading experience is always optimal.
-
-4. **Fast Loading**: Next.js's static site generation capabilities mean that our blog pages load incredibly quickly, providing a smooth user experience.
-
-5. **Rich Markdown Support**: We support GitHub Flavored Markdown, allowing for a wide range of formatting options. Let's test some of them:
 
    - *Italic* and **bold** text
    - [Links to external sites](https://nextjs.org)
