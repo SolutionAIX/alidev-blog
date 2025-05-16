@@ -1,5 +1,5 @@
 ---
-title: "Introducing Our New Next.js Blogging System with Tailwind CSS"
+title: "Introducing updated version test"
 date: "2024-09-28"
 excerpt: "A look at our sleek and efficient new blogging system built with Next.js and Tailwind CSS, designed for fast, responsive, and visually appealing content delivery."
 category: "Web Development"
@@ -16,7 +16,7 @@ authorBio: "Software Engineer and Founder of YouTube Transcript Optimizer"
 
 ![Blog System Banner](https://raw.githubusercontent.com/Dicklesworthstone/yto_blog_posts/refs/heads/main/blog_01_banner.webp)
 
-Hello, fellow developers and tech enthusiasts! Today, I'm excited to introduce our brand new blogging system built with Next.js and styled with Tailwind CSS. This powerful combination allows for a fast, responsive, and visually appealing blog that's easy to maintain and expand.
+Hello, expand.
 
 ### Key Features
 
