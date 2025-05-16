@@ -1,0 +1,187 @@
+---
+title: "Kubernetes"
+date: "2024-09-28"
+excerpt: "Introducing1111."
+category: "Web Development"
+tags: ["Next.js", "Tailwind CSS", "Blogging", "GitHub"]
+coverImage: "https://r2storage.alidev.net/blog/kubernetes-blog-img/kubernetes1.png"
+author: "Jeffrey Emanuel"
+authorImage: "https://pbs.twimg.com/profile_images/1225476100547063809/53jSWs7z_400x400.jpg"
+authorBio: "Introducing1111ptimizer"
+---
+
+
+# Kubernetes
+Welcome to my complete kubernetes repository.
+
+### What is Kubernetes?
+Kubernetes is an open-source container orchestration platform designed to automate the deployment, scaling, and management of containerized applications. It simplifies the management of containerized applications for developers and operators.
+
+### Kubernetes Architecture
+<img width="1631" alt="Img" src="[./images/kubernetes1.png](https://r2storage.alidev.net/blog/kubernetes-blog-img/kubernetes1.png">
+
+
+#### Master Node:
+The `Master Node` functions as the control center for the entire cluster, managing its overall state. It is responsible for making global decisions, such as scheduling new pods, monitoring the health of nodes and pods, and scaling applications based on demand.
+
+The `Master Node` consists of several key components:
+1. ***API Server***: The central management point of the cluster, exposing the Kubernetes API for user and component interaction.
+2. ***etcd***: A distributed key-value store that maintains the cluster's configuration data and overall state.
+3. ***Controller Manager***: This includes various controllers that monitor the cluster state through the API server and make adjustments to maintain the desired state, such as ensuring the correct number of pod replicas are running.
+4. ***Scheduler***: Assigns new pods to nodes based on resource requirements and availability, distributing the workload across the worker nodes.
+
+
+### Worker Nodes
+Worker Nodes are the machines where containers (pods) are scheduled and run, forming the data plane of the cluster and executing actual workloads. Each `Worker` Node includes:
+1. Kubelet: TAn agent that runs on each Worker Node, communicating with the Master Node and ensuring the specified containers are running and healthy.
+2. Container Runtime: Supports multiple runtimes, such as Docker or containerd, responsible for pulling container images and running containers.
+3. Kube Proxy: Manages network communication within the cluster, handling network routing for services and load balancing.
+
+### How they Interact?:
+The Master Node and Worker Nodes communicate through the Kubernetes API Server, which users and components use to interact with the cluster. For instance, deploying a new application involves sending the configuration to the API Server, which stores it in `etcd`.
+
+The Controller Manager monitors the cluster state through the API Server and takes corrective actions if there are deviations from the desired state. When scheduling new pods, the Scheduler selects a suitable Worker Node, and the Kubelet on that node starts the container. Worker Nodes report the state of running pods back to the Master Node, maintaining an up-to-date view of the cluster.
+
+
+# Main K8S Components
+
+### Nodes and Pods
+This section explains how nodes represent individual machines in a cluster, while pods are the smallest deployable units that can contain one or more containers.
+
+### Nodes:
+In Kubernetes, a `Node` is a worker machine where containers are deployed and run. Each node, whether physical or virtual, represents an individual machine within the cluster and is responsible for running workloads and providing the necessary resources for containers.
+
+### Example:
+Consider a Kubernetes cluster with three worker nodes:
+* Node A,
+* Node B,
+* Node C
+These nodes host and run containerized applications.
+
+<img width="1631" alt="Img" src="./images/nodes.png">
+
+### Pods:
+
+A pod is the smallest deployable unit in Kubernetes, representing one or more tightly coupled containers. Containers within a pod share the same network namespace, allowing them to communicate over localhost. A pod represents a single instance of a process in the cluster.
+
+#### Example:
+To deploy a simple web application in our Kubernetes cluster requiring both an application server and a database, we can package both into a single pod.
+
+<img width="1631" alt="Img" src="./images/pod.png">
+
+```yarn
+apiVersion: v1
+kind: Pod
+metadata:
+    name: webapp-with-db
+    labels:
+        app: my-webapp
+spec:
+    containers:
+        - name: webapp
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+        - name: database
+          image: mongo:latest
+```
+
+#### Explanation:
+* The pod is named `webapp-with-db`
+* The pod has two containers: `webapp` and `database`.
+* The `webapp` container uses the `nginx:latest` image, which is a popular web server and reverse proxy. We expose port 80 to access the web application.
+* The `database` container uses the `mongo:latest` image, which is widely used NoSQL database.
+* Both containers share teh same network namespace and can communicate with each other over `localhost`.
+
+### Why Pods and Not Just containers?
+Pods offer several benefits over deploying individual containers:
+
+1. Grouping Containers: Simplifies scheduling, scaling, and management by grouping related containers.
+2. Shared Resources: Containers within a pod share the same network namespace and can share volumes for easier communication and data sharing.
+3. Atomic Unit: Pods are an atomic unit of deployment, facilitating easier scaling and management.
+4. Scheduling and Affinity: Kubernetes schedules pods, not individual containers, ensuring related containers are co-located on the same node.
+
+In summary, while individual containers can be directly deployed, pods provide an additional layer of abstraction that aids in the management of related containers and enhances scheduling and resource-sharing capabilities.
+
+
+# Kubernetes concepts
+
+### Service
+A Kubernetes `Service` is an abstraction that defines a stable endpoint for accessing a group of pods. It allows you to expose your application to other pods within the cluster or to external clients, providing load balancing and automatic scaling to ensure high availability.
+
+Here's an updated version of the YAML configuration file that includes a Service for the web application:
+
+```
+# webapp-service
+apiVersion: v1
+kind: Pod
+metadata:
+    name: webapp-with-db
+    labels:
+        app: my-webapp
+spec:
+    containers:
+        - name: webapp
+            image: nginx:latest
+            ports:
+            - containerPort: 80
+        - name: database
+            image: mongo:latest
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: webapp-service
+spec:
+    selector:
+        app: my-webapp
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+```
+
+#### Explanation:
+* We've added a new YAML block to create a `Service` named `webapp-service`.
+* The `selector` field in the `Service` ensures t hat it selects pods with the label `app:my-webapp`. Since our pod has this label, the service will target it.
+* The service expose port 80, which matches the port exposed by the `webapp` container in the pod.
+* The `targetPort` specifies the port on the pod that teh service forwards traffic to. In this case, it is set to 80 to match the `containerPort` of the `webapp` container.
+
+Now that we have a service, other pods within the cluster can access the web application by simply referrring to the service's name (`webapp-service`)
+
+### Ingress:
+While the service enables internal communication between pods within the cluster, Kubernetes `Ingress` provides a way to expose your services to external clients outside the cluster. It acts as an external entry opint to your applications and enables you to configure routing rules and load balancing for incoming traffic.
+
+Here's the continuation of the YAML configuration file with an Ingress for the web application:
+
+```
+# webapp-with-ingress.yaml
+
+apiVersion networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: webapp-ingress
+spec:
+    rules:
+        - host: mywebapp.alidev.net
+          http:
+            paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                        name: webapp-service
+                        port:
+                            number: 80
+```
+
+#### Explanation:
+* We've added a new YAML block to create an `Ingress` name `webapp-ingress`.
+* The `host` field specifies the domain name under which the web application will be accessible from outside the cluster. Replace `mywebapp.alidev.net` with you actual domain name or IP address.
+* The `paths` section defines the routing rules. In this example, any incoming requests with a path prefix of `/` will be forwarded to the `webapp-service`.
+* The `backend` specifies the target service to which the traffic should be forwarded. In our case, it's the `webapp-service` we defined earlier
+
+With the `Ingress` resource in place, external clients can access the web application through the specified domain name or IP address (`mywebapp.alidev.com`)
+
+Note: for the Ingress resource to work, you need an Ingress controller deployed in your Kubernetes cluster. The Ingress controller is responsible for implementing the Ingress rules and managing the external
