@@ -1,7 +1,7 @@
 ---
-title: "Introducing updated version test"
+title: "Introducing --------------- 1111"
 date: "2024-09-28"
-excerpt: "A look at our sleek and efficient new blogging system built with Next.js and Tailwind CSS, designed for fast, responsive, and visually appealing content delivery."
+excerpt: "A ent delivery."
 category: "Web Development"
 tags: ["Next.js", "Tailwind CSS", "Blogging", "GitHub"]
 coverImage: "https://raw.githubusercontent.com/Dicklesworthstone/yto_blog_posts/refs/heads/main/blog_01_banner.webp"
