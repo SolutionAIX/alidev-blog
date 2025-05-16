@@ -69,7 +69,7 @@ To deploy a simple web application in our Kubernetes cluster requiring both an a
 
 <img width="1631" alt="Img" src="./images/pod.png">
 
-```yarn
+```
 apiVersion: v1
 kind: Pod
 metadata:
